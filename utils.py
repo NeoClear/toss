@@ -8,6 +8,8 @@ l2 = {"filename", "category", "duration", "map", "team", "winner", "date"}
 l3 = {"filename", "category", "duration", "map", "version", "team", "winner", "date", "frame"}
 
 def print_info(paths: List[str], level=1) -> None:
+    """Print info of replay files in paths according to level of detail level
+    """
     toss_cli = toss.toss()
     for path in paths:
         ret = toss_cli.analyze_file(path)
@@ -51,6 +53,9 @@ class file:
         self._execute_pwd = os.path.abspath(sys.argv[0])
 
 def get_files(dir: str) -> List[str]:
+    """Return filenames of directory dir, including files in
+    sub directories
+    """
     ret = []
     for root, dirs, files in os.walk(dir):
         for name in dirs:
@@ -61,6 +66,8 @@ def get_files(dir: str) -> List[str]:
 
 
 def sequence(f, lst: list) -> list:
+    """Return the result of function f applied to every entry of lst
+    """
     ret = []
     for ele in lst:
         ret.append(f(ele))

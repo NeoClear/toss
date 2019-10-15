@@ -8,13 +8,24 @@ class rep:
         self._meta = []
     
     def append(self, ele: dict, file=None) -> None:
+        """Append replay data from ele and replay named file to rep
+
+        Precondition: ele is a valid replay data holder and
+        file is a valid replay filename
+        """
         self._meta.append(ele)
         if file is not None:
             toss_ins = toss.toss()
             self._meta.append(toss_ins.analyze_file(file))
     
     def extend(self, lst: List[dict], dir=None) -> None:
-        # self._meta.extend(lst)
+        """Extend replay data from lst and replay dir dir to rep
+
+        Precondition: lst is a valid replay dataset holder and
+        dir is a directory with all its files are replays and do
+        not have subdirs
+        """
+        self._meta.extend(lst)
         if dir is not None:
             files = utils.get_files(dir)
             for file in files:
@@ -22,11 +33,17 @@ class rep:
                 self._meta.append(toss_ins.analyze_file(file))
     
     def count(self) -> int:
+        """Return the number of replays inside the instance of the class
+        """
         return len(self._meta)
 
     def filter(self, category=None, duration=None,
                     map=None, version=None, player=None,
                     team=None, winner=None, date=None):
+        """Return the instance which contains only entries passed category,
+        duration, map, version, player, team, winner, date functions.
+        The function does not change the value inside the instance
+        """
         ret = rep()
         for ele in self._meta:
             if category is not None:
@@ -57,6 +74,8 @@ class rep:
         return ret
     
     def select(self, *args: str) -> List[dict]:
+        """Return the list containing columns specified in args
+        """
         ret = []
         for ele in self._meta:
             line = dict()

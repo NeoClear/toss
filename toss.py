@@ -18,6 +18,8 @@ class toss:
         self._info = dict()
 
     def analyze_file(self, filename: str) -> dict:
+        """Return replay data of file filename
+        """
         sc2 = SC2Factory()
         self._replay = sc2.load_replay(filename)
         self._info["filename"] = self._replay.filename
