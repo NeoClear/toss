@@ -31,6 +31,7 @@ class toss:
         self._info["team"] = self._replay.team
         self._info["winner"] = self._replay.winner
         self._info["date"] = self._replay.date
+        self._info["events"] = self._replay.events
         # for team in self._replay.teams:
         #     for player in team:
         #         print(dir(player))
