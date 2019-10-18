@@ -8,7 +8,9 @@ import utils
 from sc2reader.events import *
 
 replays = rep.rep()
-replays.append(file="../rep/Triton LE (3).SC2Replay")
+replays.extend(dir="../rep")
+
+NeoClear = "http://us.battle.net/sc2/en/profile/10455330/1/llllllllllll/"
 
 def fff(reps):
     cnt = 0
@@ -21,8 +23,11 @@ def fff(reps):
         print(cnt * 60 // rp["duration"])
 
 def each(reps):
+    ret = []
     for rp in reps:
         for player in rp["player"]:
+            if (player.url != NeoClear):
+                continue
             cnt = 0
             for e in player.events:
                 # if (isinstance(e, CommandEvent) or
@@ -35,14 +40,14 @@ def each(reps):
                     not isinstance(e, UserOptionsEvent) and
                     not isinstance(e, CameraEvent)):
                     cnt += 1
-            print(player.name + ":", cnt * 60 // rp["duration"])
+            ret.append(cnt * 60 // rp["duration"])
+            # print(player.name + ":", cnt * 60 // rp["duration"])
+    return ret
 
 # replays.apply(fff)
-replays.apply(each)
-events = replays.select("events")[0]["events"]
+apms = replays.apply(each)
 # print(events)
-e = events[1000]
 # print(e)
-print(dir(e))
 # print(e.frame)
-print(e.second)
+
+seaborn.distplot(apms)
