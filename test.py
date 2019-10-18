@@ -1,4 +1,7 @@
+# This file is an example
+# of how to write filter functions
 from rep import *
+import seaborn
 
 ins = rep()
 ins.extend([], "rep/")
@@ -76,9 +79,9 @@ def protoss_win(team) -> bool:
     return winner.play_race == "Protoss" and\
            winner.name == "llllllllllll"
 
-print("winning rate of pvt is:",
-      (ins.filter(player=pvt, winner=protoss_win)).count() /
-       ins.filter(player=pvt).count())
+# print("winning rate of pvt is:",
+#       (ins.filter(player=pvt, winner=protoss_win)).count() /
+#        ins.filter(player=pvt).count())
 
 def nuc(team) -> bool:
     if team is None:
@@ -99,12 +102,20 @@ def nc(players) -> bool:
 def is_ladder(s: str) -> bool:
     return s == "Ladder"
 
-print("winning rate of NeoClear on Ladder using Protoss is:",
-      (ins.filter(category=is_ladder, winner=nuc).count() /
-       ins.filter(category=is_ladder, player=nc).count()))
+# print("winning rate of NeoClear on Ladder using Protoss is:",
+#       (ins.filter(category=is_ladder, winner=nuc).count() /
+#        ins.filter(category=is_ladder, player=nc).count()))
 
-print("There are games longer than 10 min:",
-      ins.filter(duration=lambda x: x > 600).count() /
-      ins.count())
+# print("There are games longer than 10 min:",
+#       ins.filter(duration=lambda x: x > 600).count() /
+#       ins.count())
 
-print(ins.filter(duration=lambda x: x > 1200).select("player"))
+# print(ins.filter(duration=lambda x: x > 1200).select("player"))
+
+# distro = utils.sequence(lambda x: x["duration"], ins.select("duration"))
+
+# print("mean:", utils.calc_mean(distro))
+# print("median:", utils.calc_median(distro))
+# print("IQR:", utils.calc_iqr(distro))
+
+# seaborn.distplot(distro)

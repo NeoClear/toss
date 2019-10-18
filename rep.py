@@ -1,6 +1,7 @@
 from typing import List
 import toss
 import utils
+import copy
 
 class rep:
     _meta = None
@@ -83,3 +84,11 @@ class rep:
                 line[arg] = ele[arg]
             ret.append(line)
         return ret
+
+    def apply(self, f):
+        """Return the value of f apply to the copy of self._meta
+        
+        Precondition: f is able to handle self._meta
+        """
+        py = copy.copy(self._meta)
+        return f(py)

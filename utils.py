@@ -1,6 +1,8 @@
 import os
 import sys
 from typing import List
+import copy
+import math
 import toss
 
 l1 = {"filename", "category", "duration", "map", "team"}
@@ -72,3 +74,96 @@ def sequence(f, lst: list) -> list:
     for ele in lst:
         ret.append(f(ele))
     return ret
+
+def calc_median(data: list) -> float:
+    """Return the median value of data,
+    return 0.0 if data is empty
+
+    Precondition: data is a list with numerical value
+    """
+    if len(data) == 0:
+        return 0.0
+    py = copy.copy(data)
+    py.sort()
+    if len(py) % 2 == 1:
+        return float(py[len(py) / 2])
+    return (py[len(py) // 2] + py[len(py) // 2 - 1]) / 2
+
+def calc_mean(data: list) -> float:
+    """Return the mean value of data,
+    return 0.0 of data is empty
+    """
+    if len(data) == 0:
+        return 0.0
+    acc = 0.0
+    for n in data:
+        acc += n
+    return acc / len(data)
+
+
+def calc_q1(data: list) -> float:
+    """Return the value of q1 of data
+
+    Precondition: data is not empty
+    values of data are numerical
+    """
+    py = copy.copy(data)
+    py.sort()
+    return py[round(len(py) / 4)]
+
+
+def calc_q3(data: list) -> float:
+    """Return the value of q3 of data
+
+    Precondition: data is not empty
+    values of data are numerical
+    """
+    py = copy.copy(data)
+    py.sort()
+    return py[len(py) - 1 - round(len(py) / 4)]
+
+
+def calc_iqr(data: list) -> float:
+    """Return the value of iqr of data
+
+    Precondition: data is not empty
+    values of data are numerical
+    """
+    return calc_q3(data) - calc_q1(data)
+
+def calc_max(data: list) -> float:
+    """Return the value of max of data
+
+    Precondition: data is not empty
+    values of data are numerical
+    """
+    acc = data[0]
+    for n in data:
+        if n > acc:
+            acc = n
+    return float(acc)
+
+def calc_min(data: list) -> float:
+    """Return the value of min of data
+
+    Precondition: data is not empty
+    values of data are numerical
+    """
+    acc = data[0]
+    for n in data:
+        if n < acc:
+            acc = n
+    return float(acc)
+
+def calc_standard_deviation(data: list) -> float:
+    """Return the standard deviation of data
+
+    Precondition: items in data is greater than 1
+    values of data are numerical
+    """
+    mean = calc_mean(data)
+    acc = 0.0
+    for n in data:
+        acc += (n - mean) ** 2
+    acc /= len(data) - 1
+    return math.sqrt(acc)
